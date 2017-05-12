@@ -42,16 +42,24 @@ router.use(function (req, res, next) {
 
 
 router.get('/', function (req, res) {
-    res.json({
+    /*
+      res.json({
+     
         message: 'hooray! wel    come to our api!'
     });
+    */
+   res.send("Hola");
+
 });
 
+router.get('/test', ( req, res ) => {
+   res.send("it works"); 
+});
 
 router.post('/createJob', upload.single("image"), (req, res) => {
     console.log("Creating Job...");
-    let output = `outputs\\p_${req.file.filename}.${ req.file.originalname.split('.')[1] }`;
-    let args = [`scripts\\${req.body.scriptName}`, req.file.path, output ];
+    let output = `outputs/p_${req.file.filename}.${ req.file.originalname.split('.')[1] }`;
+    let args = [`scripts/${req.body.scriptName}`, req.file.path, output ];
     console.log(args);
 
     exec("octave-cli " + args.join(' '), (error, stdout, stderr) => {

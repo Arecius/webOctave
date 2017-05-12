@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Octave web Service",
   "main": "index.js",
+  "scripts":{
+    "serve": "node index.js " 
+  },
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.1",
