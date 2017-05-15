@@ -10,7 +10,7 @@ var fs = require('fs');
 var exec = require('child_process').exec;
 var path = require('path');
 var upload = multer({
-    dest: 'uploads/',
+    dest: 'uploads',
     onFileUploadStart: function (file) {
         console.log('Upload is starting ...');
     },
@@ -42,12 +42,7 @@ router.use(function (req, res, next) {
 
 
 router.get('/', function (req, res) {
-    /*
-      res.json({
-     
-        message: 'hooray! wel    come to our api!'
-    });
-    */
+
    res.send("Hola");
 
 });
@@ -57,11 +52,14 @@ router.get('/test', ( req, res ) => {
 });
 
 router.post('/createJob', upload.single("image"), (req, res) => {
-    console.log("Creating Job...");
-    let output = `outputs/p_${req.file.filename}.${ req.file.originalname.split('.')[1] }`;
-    let args = [`scripts/${req.body.scriptName}`, req.file.path, output ];
-    console.log(args);
-
+    
+    console.log( `Creating Job for ${ req.body.scriptName }..."`);
+    //let output = path.join( 'outputs', `p_${req.file.filename}`) + "." + req.file.originalname.split('.')[1]; 
+    let output = `outputs/p_${req.file.filename}.${req.file.originalname.split('.')[1]}`; 
+    let script = path.join( 'scripts', req.body.scriptName)
+    
+    let args = [ script, req.file.path, output ].concat( JSON.parse( req.body.scriptVars ) );
+    console.log( `command: octave-cli ${args.join(' ')}` );
     exec("octave-cli " + args.join(' '), (error, stdout, stderr) => {
         console.log("Done");
         res.json({

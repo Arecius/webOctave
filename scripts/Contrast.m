@@ -4,26 +4,22 @@ printf("Fetching arguments\n");
 arg_list = argv ();
 filename = arg_list{1};
 outputFile = arg_list{2};
-log_constant = str2num(arg_list{3});
+e_constant = str2num(arg_list{3});
+m_constant = str2num(arg_list{4});
 printf("Loading image package...\n");
 pkg load image;
 printf ("Reading image..\n");
 im = imread( filename );
 printf("Processing image...\n");
+
 % Get grayscale image
 gim=rgb2gray(im);
 
-% Log transformation
-% Iterate over the image
-% im( i, j ) -> pixel
+% In double format
+dim=im2double(gim);
 
-[M,N]=size(gim);
-for i=1:M
-    for j=1:N
-        in = double( gim(i,j) );
-        imp(i,j) = log_constant.*log10( 1+in );
-    end
-end
+contrast=1./(1+(m_constant./(dim+eps)).^e_constant);
+
 printf("Result wrote to: ");
-printf( outputFile )
-imwrite( imp, outputFile );
+printf( outputFile );
+imwrite( contrast, outputFile );
