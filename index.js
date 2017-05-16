@@ -58,13 +58,22 @@ router.post('/createJob', upload.single("image"), (req, res) => {
     let output = `outputs/p_${req.file.filename}.${req.file.originalname.split('.')[1]}`; 
     let script = path.join( 'scripts', req.body.scriptName)
     
-    let args = [ script, req.file.path, output ].concat( JSON.parse( req.body.scriptVars ) );
+    let args = [ script, req.file.path, output ];
+    console.log( `Args: ${args}` )
+    
+    if( req.body.scriptVars ){
+        
+        args = args.concat( JSON.parse( req.body.scriptVars ) )
+    }
     console.log( `command: octave-cli ${args.join(' ')}` );
     exec("octave-cli " + args.join(' '), (error, stdout, stderr) => {
         console.log("Done");
-        res.json({
-            retrieveId: output
-        });
+        setTimeout( () => {
+            res.json({
+                retrieveId: output
+            } );
+        },600);
+
     });
 
 
