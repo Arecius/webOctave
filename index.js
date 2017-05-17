@@ -72,7 +72,7 @@ router.post('/createJob', upload.single("image"), (req, res) => {
             res.json({
                 retrieveId: output
             } );
-        },600);
+        },1000);
 
     });
 
