@@ -62,7 +62,7 @@ router.post('/createJob', upload.single("image"), (req, res) => {
     console.log( `Args: ${args}` )
     
     if( req.body.scriptVars ){
-        
+        console.log(`vars: ${JSON.parse( req.body.scriptVars )}`)
         args = args.concat( JSON.parse( req.body.scriptVars ) )
     }
     console.log( `command: octave-cli ${args.join(' ')}` );
