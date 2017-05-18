@@ -5,8 +5,9 @@ printf("Fetching arguments\n");
 arg_list = argv ();
 filename = arg_list{1};
 outputFile = arg_list{2};
-grade   = str2num(arg_list{3});
-cutoff   = str2num(arg_list{4});
+asset = arg_list{3};
+grade   = str2num(arg_list{4});
+cutoff   = str2num(arg_list{5});
 printf("Loading image package...\n");
 pkg load image;
 printf ("Reading image..\n");
@@ -36,16 +37,22 @@ fftshow_img=im2uint8(fl/fm);
 afl=af.*hbf;
 fl=log(1+abs(afl));
 fm=max(fl(:));
-fftshow_img_c=im2uint8(fl/fm);
+asset_result=im2uint8(fl/fm);
 
 afli=ifft2(afl);
 
 %ifftshow
 ifl=abs(afli);
 ifm=max(ifl(:));
-final= im - im2uint8(ifl/ifm);
+final= gim - im2uint8(ifl/ifm);
 
 printf("Grade: %d\n",grade);
 printf("Cutoff: %d\n",cutoff);
 
-imwrite(final,outputFile);
+printf("Result wrote to: ");
+printf( outputFile)
+imwrite( final, outputFile);
+printf( "\nAsset wrote to: " );
+printf( asset );
+printf("\n")
+imwrite( asset_result, asset);

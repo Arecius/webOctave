@@ -4,7 +4,7 @@ printf("Fetching arguments\n");
 arg_list = argv ();
 filename = arg_list{1};
 outputFile = arg_list{2};
-log_constant = str2num(arg_list{3});
+log_constant = str2num(arg_list{4});
 printf("Loading image package...\n");
 pkg load image;
 printf ("Reading image..\n");

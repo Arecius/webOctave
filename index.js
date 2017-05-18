@@ -55,10 +55,11 @@ router.post('/createJob', upload.single("image"), (req, res) => {
     
     console.log( `Creating Job for ${ req.body.scriptName }..."`);
     //let output = path.join( 'outputs', `p_${req.file.filename}`) + "." + req.file.originalname.split('.')[1]; 
-    let output = `outputs/p_${req.file.filename}.${req.file.originalname.split('.')[1]}`; 
+    let output = `outputs/result_${req.file.filename}.${req.file.originalname.split('.')[1]}`; 
+    let asset = `outputs/asset_${req.file.filename}.${req.file.originalname.split('.')[1]}`; 
     let script = path.join( 'scripts', req.body.scriptName)
     
-    let args = [ script, req.file.path, output ];
+    let args = [ script, req.file.path, output, asset ];
     console.log( `Args: ${args}` )
     
     if( req.body.scriptVars ){
@@ -70,7 +71,8 @@ router.post('/createJob', upload.single("image"), (req, res) => {
         console.log("Done");
         setTimeout( () => {
             res.json({
-                retrieveId: output
+                result: output,
+                asset: asset
             } );
         },1000);
 
