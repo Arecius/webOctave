@@ -10,9 +10,12 @@ sigma   = str2num(arg_list{3});
 
 printf("Loading image package...\n");
 pkg load image;
-printf ("Reading image..\n");
 a = imread( filename );
 printf("Processing image...\n");
+
+if size(a,3)==3
+    a=rgb2gray(a);
+end
 
 H=fspecial('gaussian',size(a),sigma);
 af=fftshift(fft2(a));
@@ -23,7 +26,7 @@ affi=ifft2(aff);
 %ifftshow
 ifl=abs(affi);
 ifm=max(ifl(:));
-result= a - im2uint8(ifl/ifm);
+result = a - im2uint8(ifl/ifm);
 
 
 printf("Applying filter\n");

@@ -11,16 +11,18 @@ printf ("Reading image..\n");
 im = imread( filename );
 printf("Processing image...\n");
 % Get grayscale image
-gim=rgb2gray(im);
+if size(im,3)==3
+    im=rgb2gray(im);
+end
 
 % Log transformation
 % Iterate over the image
 % im( i, j ) -> pixel
 
-[M,N]=size(gim);
+[M,N]=size(im);
 for i=1:M
     for j=1:N
-        in = double( gim(i,j) );
+        in = double( im(i,j) );
         imp(i,j) = log_constant.*log10( 1+in );
     end
 end

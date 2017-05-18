@@ -10,18 +10,22 @@ cutoff   = str2num(arg_list{4});
 printf("Loading image package...\n");
 pkg load image;
 printf ("Reading image..\n");
-im = imread( filename );
+gim = imread( filename );
 printf("Processing image...\n");
 
-h= size(im,1);
-w= size(im,2);
+if size(gim,3)==3
+    gim=rgb2gray(gim);
+end
+
+h= size(gim,1);
+w= size(gim,2);
 
 [x,y]=meshgrid( -floor(w/2):floor(w-1)/2, -floor(h/2):floor(h-1)/2 );
 hbf=1./(1.+(cutoff./(x.^2+y.^2).^0.5).^(2*grade));
 
 printf("Applying filter\n");
 
-af=fftshift(fft2(im));
+af=fftshift(fft2(gim));
 
 %fftshow
 fl=log(1+abs(af));

@@ -8,11 +8,14 @@ exp_constant = str2num(arg_list{3});
 printf("Loading image package...\n");
 pkg load image;
 printf ("Reading image..\n");
-im = imread( filename );
+gim = imread( filename );
 printf("Processing image...\n");
 
 % Get grayscale image
-gim=rgb2gray(im);
+if size(gim,3)==3
+    gim=rgb2gray(im);
+end
+
 
 % In double format
 gim=im2double(gim);

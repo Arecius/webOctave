@@ -8,19 +8,22 @@ size_constant = str2num(arg_list{3});
 printf("Loading image package...\n");
 pkg load image;
 printf ("Reading image..\n");
-im = imread( filename );
+gim = imread( filename );
 printf("Processing image...\n");
 
 % Get grayscale image
-gim=rgb2gray(im);
+
+if size(gim,3)==3
+    gim=rgb2gray(gim);
+end
 
 % In double format
 dim=im2double(gim);
 
 % Generate the mask
-mask = ones(size_constant,size_constant)/(size_constant*size_constant);
+h = fspecial( 'average',size_constant)
 
-imp = imfilter(im,mask);
+imp = imfilter(dim,h);
 
 printf("Result wrote to: ");
 printf( outputFile );
