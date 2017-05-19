@@ -74,7 +74,7 @@ router.post('/createJob', upload.single("image"), (req, res) => {
                 result: output,
                 asset: asset
             } );
-        },1000);
+        },1200);
 
     });
 
